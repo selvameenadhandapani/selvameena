@@ -1,0 +1,36 @@
+1. Create Testsuit class to run. 
+2. Think that you are writing the test case engine yourself. Like your own JUnit. And proceed further. 
+
+3. 
+
+- CodeTest represents a Java test - This is the Testcase file that you are running. 
+
+- CodeClass - This is the java class you are going to test.
+CodeLine - Represents a single line of code with line number.
+
+ 
+- CodeAnalyzer This actually does the entire work. It calls CodeTest - Runs the test, checks the result, and then finally sends back the coverage results. 
+	runTestSuite method in CodeAnalyser must return the codeTest class as well, as just the CodeLine would be confusing as we dont know which class the line belongs to. 
+	
+	
+Things to say with the completed response:
+==========================================
+
+	1. Documentation are added for classes and public methods. 
+	2. "Clean Code" standards are followed in the coding:
+		a. A method should do what's said in its name, and only that alone.
+		b. Method should not be more than 30 lines long. 
+		c. Class should not be more than 100 lines long.
+		 
+		 
+Final Checks to do:
+===================
+
+1. Remove SOPs
+2. Remove Public static void mains
+3. Add Loggings
+4. Add JUnit test case
+5. Remove unwanted classes. 
+6. Check for Documentation in every class and public methods
+
+	
