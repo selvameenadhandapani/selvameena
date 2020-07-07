@@ -2,20 +2,16 @@ package com.diffblue.analyze;
 
 import java.util.Set;
 
-import com.diffblue.businessObjects.ICodeLine;
-import com.diffblue.performTest.ICodeTest;
+import com.diffblue.businessObjects.CodeLine;
+import com.diffblue.performTest.CodeTest;
 
 public class CodeAnalyzer implements ICodeAnalyzer {
 
-	@Override
-	public Set<ICodeLine> runTest(ICodeTest test) {
-		// TODO Auto-generated method stub
+	public Set<CodeLine> runTest(CodeTest test) {
 		return null;
 	}
 
-	@Override
-	public Set<ICodeLine> runTestSuite(Set<ICodeTest> tests) {
-		// TODO Auto-generated method stub
+	public Set<CodeLine> runTestSuite(Set<CodeTest> tests) {
 		return null;
 	}
 

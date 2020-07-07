@@ -2,7 +2,7 @@ package com.diffblue.performTest;
 
 import java.util.Set;
 
-import com.diffblue.businessObjects.ICodeLine;
+import com.diffblue.businessObjects.CodeLine;
 
 /**
  * An interface representing a Java test
@@ -16,5 +16,5 @@ public interface ICodeTest {
     /**
      * @return the set of line numbers covered by an execution of this test
      */
-    Set<ICodeLine> getCoveredLines();
+    Set<CodeLine> getCoveredLines();
 }

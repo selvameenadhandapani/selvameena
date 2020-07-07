@@ -1,17 +1,23 @@
 package com.diffblue.businessObjects;
 
 public class CodeLine implements ICodeLine {
-
-	@Override
+	int lineNumber;
+	String lineContent;
+	
 	public int getLineNumber() {
-		// TODO Auto-generated method stub
-		return 0;
+		return lineNumber;
 	}
 
-	@Override
+	public void setLineNumber(int lineNumber) {
+		this.lineNumber = lineNumber;
+	}
+
 	public String getContents() {
-		// TODO Auto-generated method stub
-		return null;
+		return lineContent;
+	}
+	
+	public void setContents(String lineContent) {
+		this.lineContent = lineContent;
 	}
 
 }

@@ -2,19 +2,21 @@ package com.diffblue.performTest;
 
 import java.util.Set;
 
-import com.diffblue.businessObjects.ICodeLine;
+import com.diffblue.businessObjects.CodeLine;
 
 public class CodeTest implements ICodeTest {
 
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	String testClassName;
 
-	@Override
-	public Set<ICodeLine> getCoveredLines() {
-		// TODO Auto-generated method stub
+	public String getName() {
+		return testClassName;
+	}
+	
+	public void setName(String testClassName) {
+		this.testClassName = testClassName;
+	}
+	
+	public Set<CodeLine> getCoveredLines() {
 		return null;
 	}
 

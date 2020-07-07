@@ -10,7 +10,7 @@ public interface ICodeClass {
     /**
      * @return the contents of the code as an array of {link CodeLine}'s
      */
-    List<ICodeLine> getLinesOfCode();
+    List<CodeLine> getLinesOfCode();
 
     /**
      * @return the {@link File} containing the code under test

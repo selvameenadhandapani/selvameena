@@ -2,8 +2,8 @@ package com.diffblue.analyze;
 
 import java.util.Set;
 
-import com.diffblue.businessObjects.ICodeLine;
-import com.diffblue.performTest.ICodeTest;
+import com.diffblue.businessObjects.CodeLine;
+import com.diffblue.performTest.CodeTest;
 
 /**
  * An interface representing code analysis functions
@@ -14,12 +14,12 @@ public interface ICodeAnalyzer {
      * @param test to run
      * @return the covered lines of code
      */
-    Set<ICodeLine> runTest(ICodeTest test);
+    Set<CodeLine> runTest(CodeTest test);
 
     /**
      * Run all tests and returns the covered lines of code
      * @param tests to run
      * @return the covered lines of code
      */
-    Set<ICodeLine> runTestSuite(Set<ICodeTest> tests);
+    Set<CodeLine> runTestSuite(Set<CodeTest> tests);
 }
