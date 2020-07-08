@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.coding.coverage.utils.CoverageUtility;
 import com.diffblue.businessObjects.CodeClass;
 import com.diffblue.businessObjects.CodeLine;
 
@@ -39,7 +40,7 @@ public class CodeClassLinesGenerator implements ICodeClassLinesGenerator {
 		try {
 			fileInputStream = new FileInputStream(inputFileNameWithPath);
 			bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
-			codeClass = populateCodeClass(bufferedReader);
+			codeClass = populateCodeClass(bufferedReader, inputFileNameWithPath);
 		} catch (Exception e) {
 			LOGGER.severe("Exception occurred while writing the source file: " + e.getMessage());
 			LOGGER.fine(e.fillInStackTrace().toString());
@@ -60,7 +61,7 @@ public class CodeClassLinesGenerator implements ICodeClassLinesGenerator {
 		return codeClass;
 	}
 	
-	private CodeClass populateCodeClass(BufferedReader bufferedReader) {
+	private CodeClass populateCodeClass(BufferedReader bufferedReader, String inputFileNameWithPath) {
 		CodeClass codeClass = new CodeClass();
 		List<CodeLine> codeLines = new ArrayList<CodeLine>();
 		String outputFile = "SourceFile.txt";
@@ -76,6 +77,7 @@ public class CodeClassLinesGenerator implements ICodeClassLinesGenerator {
 				codeLines.add(populateCodeLine(lineNumber, line));
 				fileWriter.write(line);
 			}
+			codeClass.setSourceClassName(CoverageUtility.findPublicClassName(inputFileNameWithPath));
 			codeClass.setFile(sourceFile);
 			codeClass.setLinesOfCode(codeLines);
 		} catch(IOException ioException) {

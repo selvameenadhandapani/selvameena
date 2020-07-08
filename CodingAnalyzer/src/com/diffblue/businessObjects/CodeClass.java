@@ -7,7 +7,16 @@ public class CodeClass implements ICodeClass {
 
 	File sourceFile;
 	List<CodeLine> codeLines;
+	String sourceClassName; 
 	
+	public String getSourceClassName() {
+		return sourceClassName;
+	}
+
+	public void setSourceClassName(String sourceClassName) {
+		this.sourceClassName = sourceClassName;
+	}
+
 	public List<CodeLine> getLinesOfCode() {
 		return codeLines;
 	}
