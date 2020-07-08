@@ -56,6 +56,11 @@ public class CodeCoverage implements ICodeCoverage {
 		}
 	}
 
+	/**
+	 * This method identifies the test methods that are to be executed.
+	 * @param codeTest
+	 * @return
+	 */
 	public List<Method> identifyTestMethods(CodeTest codeTest) {
 		Method[] methods = null;
 		try {
@@ -73,10 +78,15 @@ public class CodeCoverage implements ICodeCoverage {
 		return null;
 	}
 	
+	/**
+	 * This method gets list of all methods. This is just for marker purpose to identify the beginning and end of the method.
+	 * @param codeTest
+	 * @return
+	 */
 	public List<Method> identifyMethods(CodeTest codeTest) {
 		Method[] methods = null;
 		try {
-			methods = Class.forName(codeTest.getName()).getMethods();
+			methods = Class.forName(codeTest.getName()).getDeclaredMethods();
 			if (methods != null) {
 				return Arrays.asList(methods);
 			}

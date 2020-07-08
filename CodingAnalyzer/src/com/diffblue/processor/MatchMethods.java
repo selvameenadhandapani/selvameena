@@ -18,6 +18,14 @@ import com.diffblue.businessObjects.TestClassCode;
 public class MatchMethods {
 	private final static Logger LOGGER = Logger.getLogger(MatchMethods.class.getName());
 
+	/**
+	 * This method does the entire job of identifying the lines in the sourcefile thats covered by the test class.
+	 * @param codeClass
+	 * @param testClassCode
+	 * @param listOfTestMethods
+	 * @param listOfAllMethods
+	 * @return
+	 */
 	public List<CodeLine> matchTestMethods(CodeClass codeClass, TestClassCode testClassCode, List<Method> listOfTestMethods, List<Method> listOfAllMethods) {
 		List<CodeLine> finalListOfCoveredLines = new ArrayList<CodeLine>();
 		if (listOfTestMethods != null && listOfTestMethods.size() > 0) {
@@ -33,6 +41,9 @@ public class MatchMethods {
 		return finalListOfCoveredLines;
 	}
 
+	/*
+	 * This method returns the whole method declaration by using the start/end index of the lines. 
+	 */
 	public List<CodeLine> getLinesOfCodeInMethod(String methodName, List<CodeLine> linesOfCode,
 			List<Method> listOfAllMethods) {
 		int lineIndex = 0;
@@ -55,6 +66,9 @@ public class MatchMethods {
 		return linesInTestMethod;
 	}
 
+	/*
+	 * Identifies where the method ends.
+	 */
 	public int identifyEndOfMethod(int beginningLineIndex, List<CodeLine> testClassLineOfCode,
 			List<Method> listOfAllMethods) {
 		List<String> listOfMethodFullNames = MethodUtility.GetMethodFullValue(listOfAllMethods);
@@ -83,6 +97,7 @@ public class MatchMethods {
 		return linesInTestMethod;
 	}
 
+	//Finds how the source class instance is called inside the method.
 	public String findClassInstanceInMethod(CodeClass codeClass, List<CodeLine> linesInTestMethod) {
 		String classInstanceName = "";
 		if (codeClass != null && codeClass.getSourceClassName() != null) {
