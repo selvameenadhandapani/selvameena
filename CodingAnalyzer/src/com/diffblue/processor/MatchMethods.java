@@ -59,7 +59,7 @@ public class MatchMethods {
 			List<Method> listOfAllMethods) {
 		List<String> listOfMethodFullNames = MethodUtility.GetMethodFullValue(listOfAllMethods);
 		int endOfMethodLineIndex = 0;
-		for (int lineIndex = beginningLineIndex; lineIndex < testClassLineOfCode.size(); lineIndex++) {
+		for (int lineIndex = beginningLineIndex + 1; lineIndex < testClassLineOfCode.size(); lineIndex++) {
 			String lineContent = testClassLineOfCode.get(lineIndex).getContents();
 			if (testClassLineOfCode.get(lineIndex) != null
 					&& lineContent.length() > 1) {
@@ -75,8 +75,10 @@ public class MatchMethods {
 	public List<CodeLine> getLinesFromBeginningToEnd(int beginningLineIndex, int endOfMethodLineIndex,
 			List<CodeLine> testClassLineOfCode) {
 		List<CodeLine> linesInTestMethod = new ArrayList<CodeLine>();
-		for (int lineIndex = beginningLineIndex; lineIndex <= endOfMethodLineIndex; lineIndex++) {
-			linesInTestMethod.add(testClassLineOfCode.get(lineIndex));
+		for (int lineIndex = beginningLineIndex; lineIndex < endOfMethodLineIndex; lineIndex++) {
+			if (!testClassLineOfCode.get(lineIndex).getContents().startsWith("/*") && !testClassLineOfCode.get(lineIndex).getContents().startsWith("*")) {
+				linesInTestMethod.add(testClassLineOfCode.get(lineIndex));
+			}
 		}
 		return linesInTestMethod;
 	}
@@ -88,8 +90,9 @@ public class MatchMethods {
 				String line = codeLine.getContents();
 				if (line.indexOf(codeClass.getSourceClassName()) > 0 && line.indexOf("new") > 0
 						&& line.indexOf(codeClass.getSourceClassName() + "()") > 0) {
-					classInstanceName = line.substring(line.indexOf(codeClass.getSourceClassName()), line.indexOf("="));
+					classInstanceName = line.substring(line.indexOf(codeClass.getSourceClassName()) + codeClass.getSourceClassName().length(), line.indexOf("="));
 					classInstanceName = StringUtility.trim(classInstanceName);
+					break;
 				}
 			}
 		}
@@ -100,11 +103,12 @@ public class MatchMethods {
 		List<CodeLine> coveredLines = new ArrayList<CodeLine>();
 
 		try {
-			List<Method> listOfAllMethods = Arrays.asList(Class.forName(codeClass.getSourceClassName()).getMethods());
+			//TODO Write utility method to read the package structure instead of hardcoding
+			List<Method> listOfAllMethods = Arrays.asList(Class.forName("com.coding.firstMaxValues." + codeClass.getSourceClassName()).getMethods());
 			for (MatchedMethodSignature invokedMethod : invokedMethodsInTest) {
 				List<CodeLine> coveredCodeLines = getLinesOfCodeInMethod(invokedMethod.getMethodName(),
 						codeClass.getLinesOfCode(), listOfAllMethods);
-				ListUtility.addListToList(coveredLines, coveredCodeLines);
+				ListUtility.addListToList(coveredCodeLines, coveredLines);
 			}
 		} catch (ClassNotFoundException cnfe) {
 			LOGGER.severe("Exception occurred while identifying code coverage: " + cnfe.getMessage());

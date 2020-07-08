@@ -1,0 +1,62 @@
+false	1	package com.coding.firstMaxValues;
+false	2	
+false	3	import java.util.ArrayList;
+false	4	import java.util.Arrays;
+false	5	import java.util.List;
+false	6	import java.util.stream.Collectors;
+false	7	
+false	8	/**
+false	9	 * 
+false	10	 * @author Selvameena Dhandapani
+false	11	 * @Date 8-Jul-2020
+false	12	 * @Description Accepting an array of integers, this class identifies the first maximum values.
+false	13	 * The number of maximum values needed varies.
+false	14	 */
+false	15	public class FirstMaxValues {
+false	16		
+false	17		/**
+false	18		 * @param inputArray
+false	19		 * @param numberOfMaxValues
+false	20		 * @return List of First Maximum values.
+false	21		 * 
+false	22		 */
+false	23		public List<Integer> findFirstMaxValues(int[] inputArray, int numberOfMaxValues) {
+true	24			List<Integer> inputNumbersList = new ArrayList<Integer>();
+true	25			List<Integer> maxValuesList = new ArrayList<Integer>();
+true	26			inputNumbersList = convertArrayToList(inputArray);
+true	27	
+true	28			for (int maxValueCount = 0; maxValueCount < numberOfMaxValues; maxValueCount++) {
+true	29				int maxValueIndex = getMaxValueIndex(inputNumbersList);
+true	30				maxValuesList.add(inputNumbersList.get(maxValueIndex));
+true	31				inputNumbersList.remove(maxValueIndex);
+true	32			}
+true	33	
+true	34			return maxValuesList;
+true	35		}
+true	36	
+true	37		/**
+true	38		 * Returns only one integer that's the biggest in the input list. 
+true	39		 * @param inputNumbersList
+true	40		 * @return
+true	41		 */
+false	42		public int getMaxValueIndex(List<Integer> inputNumbersList) {
+false	43			int maxValue = 0;
+false	44			int maxValueIndex = -1;
+false	45			for (int i = 0; i < inputNumbersList.size(); i++) {
+false	46				if (inputNumbersList.get(i) > maxValue) {
+false	47					maxValue = inputNumbersList.get(i);
+false	48					maxValueIndex = i;
+false	49				}
+false	50			}
+false	51			return maxValueIndex;
+false	52		}
+false	53	
+false	54		private List<Integer> convertArrayToList(int[] inputArray) {
+false	55			List<Integer> inputNumbersList = new ArrayList<Integer>();
+false	56			if (inputArray != null) {
+false	57				inputNumbersList = Arrays.stream(inputArray).boxed().collect(Collectors.toList());
+false	58			}
+false	59			return inputNumbersList;
+false	60		}
+false	61	
+false	62	}

@@ -14,5 +14,12 @@ public class StringUtility {
 			return inputString;
 		}
 	}
+	
+	public static String removeIndentation(String inputString) {
+		if (inputString != null) {
+			inputString = inputString.replaceAll("\t", "");
+		}
+		return inputString;
+	}
 }
 

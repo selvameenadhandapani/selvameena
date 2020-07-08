@@ -42,7 +42,7 @@ public class InvokedMethod {
 		if (params == null) {
 			matchedMethodSignature.setNumberOfParameters(0);
 		} else {
-			matchedMethodSignature.setNumberOfParameters(params.length - 1);
+			matchedMethodSignature.setNumberOfParameters(params.length);
 		}
 		return matchedMethodSignature;
 	}

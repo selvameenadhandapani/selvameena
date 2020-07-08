@@ -14,15 +14,24 @@ public class CoverageUtility {
 	}
 	
 	public static boolean isMultiLineComment(int lineIndex, List<CodeLine> codeLines) {
-		
+		int openBlockComment = 0;
+		int closeBlockComment = 0;
 		for (int index = lineIndex ; index >= 0 ; index--) {
 			if (codeLines.get(index) != null && codeLines.get(index).getContents().contains("/*")) {
 				/* TODO
 				 * More logic needed here to find out there is no ending of the block comment, even if its there, it comes before the start 
 				 * of the block comment. This means the input codeLine is definitely part of a block comment */
 				 
-				 return true;
+				openBlockComment = index;
+			} 
+			if (codeLines.get(index) != null && codeLines.get(index).getContents().contains("*/")) {
+				closeBlockComment = index;
 			}
+			
+		}
+		
+		if(openBlockComment != 0 && closeBlockComment != 0 && closeBlockComment < openBlockComment) {
+			return true;
 		}
 		return false;
 	}

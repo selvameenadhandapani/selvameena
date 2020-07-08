@@ -20,5 +20,17 @@ public class MethodUtilityTest {
 		
 		assertEquals(true, MethodUtility.isStartOfNewMethod(listOfAllMethods, lineContent));
 	}
+	
+	@Test
+	public void testIsStartOfNewMethodNegative () {
+		List<String> listOfAllMethods = new ArrayList<String>();
+		listOfAllMethods.add("public void com.coding.firstMaxValues.test.FirstMaxValuesTest.testFirstTwoMaxValues()");
+		listOfAllMethods.add("public void com.coding.firstMaxValues.test.FirstMaxValuesTest.testFirstOneMaxValue()");
+		listOfAllMethods.add("public void com.coding.firstMaxValues.test.FirstMaxValuesTest.testFirstFourMaxValues()");
+		
+		String lineContent = "public void testFirstTwoMaxValuesNEG() {";
+		
+		assertEquals(false, MethodUtility.isStartOfNewMethod(listOfAllMethods, lineContent));
+	}
 
 }

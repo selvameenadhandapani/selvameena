@@ -6,8 +6,11 @@ import java.util.List;
 
 public class MethodUtility {
 	public static boolean isStartOfNewMethod(List<String> listOfAllMethods, String lineContent) {
-		boolean isStartOfNewMethod = true; 
-		if (StringUtility.trim(lineContent).length() > 0) {
+		boolean isStartOfNewMethod = false; 
+		lineContent = StringUtility.trim(lineContent);
+		if (lineContent.length() == 0 || !isPossibleMethod(lineContent) || lineContent.contains("=")) {
+			return false;
+		} else {
 			String methodSignatureWords = lineContent.substring(0, lineContent.indexOf("("));
 			String[] wordsToCheck = methodSignatureWords.split(" "); 
 			
@@ -33,10 +36,21 @@ public class MethodUtility {
 					}
 				}
 			}
-		
+	
 		return isStartOfNewMethod;
 	}
 	
+	public static boolean isPossibleMethod(String lineContent) {
+		boolean possibleMethod = false; 
+		if(lineContent.indexOf("(") > 0 && lineContent.indexOf(")") > 0) {
+			possibleMethod = true;
+		} 
+		
+		if(StringUtility.trim(StringUtility.removeIndentation(lineContent)).length() == 0) {
+			possibleMethod = false;
+		}
+		return possibleMethod;
+	}
 	public static List<String> GetMethodFullValue(List<Method> listOfMethods) {
 		List<String> listOfMethodNames = new ArrayList<String>();
 		listOfMethods.forEach(method -> {
