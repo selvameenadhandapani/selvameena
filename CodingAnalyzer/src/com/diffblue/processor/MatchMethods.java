@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import com.coding.coverage.utils.CoverageUtility;
 import com.coding.coverage.utils.ListUtility;
+import com.coding.coverage.utils.MethodUtility;
 import com.coding.coverage.utils.StringUtility;
 import com.diffblue.businessObjects.CodeClass;
 import com.diffblue.businessObjects.CodeLine;
@@ -17,30 +18,37 @@ import com.diffblue.businessObjects.TestClassCode;
 public class MatchMethods {
 	private final static Logger LOGGER = Logger.getLogger(MatchMethods.class.getName());
 
-	public void matchTestMethods(CodeClass codeClass, TestClassCode testClassCode, List<Method> listOfTestMethods, List<Method> listOfAllMethods) {
-		listOfTestMethods.forEach(testMethod -> {
-			List<CodeLine> linesInTestMethod = getLinesOfCodeInMethod(testMethod.getName(), testClassCode.getLinesOfCode(), listOfAllMethods);
-			String classInstanceInMethod = findClassInstanceInMethod(codeClass, linesInTestMethod);
-			InvokedMethod invokedMethod = new InvokedMethod();
-			List<MatchedMethodSignature> invokedMethodsInTest = invokedMethod.findInvokedMethodInSourceClass(classInstanceInMethod, linesInTestMethod);
-			List<CodeLine> coveredLines = getCoveredLines(invokedMethodsInTest, codeClass);
-		});
+	public List<CodeLine> matchTestMethods(CodeClass codeClass, TestClassCode testClassCode, List<Method> listOfTestMethods, List<Method> listOfAllMethods) {
+		List<CodeLine> finalListOfCoveredLines = new ArrayList<CodeLine>();
+		if (listOfTestMethods != null && listOfTestMethods.size() > 0) {
+			listOfTestMethods.forEach(testMethod -> {
+				List<CodeLine> linesInTestMethod = getLinesOfCodeInMethod(testMethod.getName(), testClassCode.getLinesOfCode(), listOfAllMethods);
+				String classInstanceInMethod = findClassInstanceInMethod(codeClass, linesInTestMethod);
+				InvokedMethod invokedMethod = new InvokedMethod();
+				List<MatchedMethodSignature> invokedMethodsInTest = invokedMethod.findInvokedMethodInSourceClass(classInstanceInMethod, linesInTestMethod);
+				List<CodeLine> coveredLines = getCoveredLines(invokedMethodsInTest, codeClass);
+				ListUtility.addListToList(coveredLines, finalListOfCoveredLines);
+			});
+		}
+		return finalListOfCoveredLines;
 	}
 
 	public List<CodeLine> getLinesOfCodeInMethod(String methodName, List<CodeLine> linesOfCode,
 			List<Method> listOfAllMethods) {
-		List<CodeLine> codeLines = new ArrayList<CodeLine>();
 		int lineIndex = 0;
 		int endOfMethodLineIndex = 0;
 
 		for (CodeLine lineOfCode : linesOfCode) {
 			++lineIndex;
 			if (lineOfCode.getContents().indexOf(methodName) >= 0) {
-				if (!CoverageUtility.isComment(lineOfCode, lineIndex, codeLines)) {
+				if (!CoverageUtility.isComment(lineOfCode, lineIndex, linesOfCode)) {
+					endOfMethodLineIndex = identifyEndOfMethod(lineIndex, linesOfCode, listOfAllMethods);
 					break;
+				} else {
+					continue;
 				}
 			}
-			endOfMethodLineIndex = identifyEndOfMethod(lineIndex, linesOfCode, listOfAllMethods);
+			
 		}
 
 		List<CodeLine> linesInTestMethod = getLinesFromBeginningToEnd(lineIndex, endOfMethodLineIndex, linesOfCode);
@@ -49,11 +57,13 @@ public class MatchMethods {
 
 	public int identifyEndOfMethod(int beginningLineIndex, List<CodeLine> testClassLineOfCode,
 			List<Method> listOfAllMethods) {
+		List<String> listOfMethodFullNames = MethodUtility.GetMethodFullValue(listOfAllMethods);
 		int endOfMethodLineIndex = 0;
 		for (int lineIndex = beginningLineIndex; lineIndex < testClassLineOfCode.size(); lineIndex++) {
+			String lineContent = testClassLineOfCode.get(lineIndex).getContents();
 			if (testClassLineOfCode.get(lineIndex) != null
-					&& testClassLineOfCode.get(lineIndex).getContents().length() > 1) {
-				if (listOfAllMethods.contains(testClassLineOfCode.get(lineIndex).getContents())) {
+					&& lineContent.length() > 1) {
+				if(MethodUtility.isStartOfNewMethod(listOfMethodFullNames, lineContent)) {
 					endOfMethodLineIndex = lineIndex;
 					break;
 				}

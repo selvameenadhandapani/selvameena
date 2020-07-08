@@ -20,12 +20,12 @@ public class CodeClassLinesGenerator implements ICodeClassLinesGenerator {
 	private final static Logger LOGGER =  
             Logger.getLogger(CodeClassLinesGenerator.class.getName()); 
 
-	public static void main(String[] args) throws Exception {
+	/*-public static void main(String[] args) throws Exception {
 		String inputFileNameWithPath = "C:\\Users\\sivar\\GitRepository\\CodingAnalyzer\\src\\com\\coding\\firstMaxValues\\FirstMaxValues.java";
 		CodeClassLinesGenerator codeClassLinesGenerator = new CodeClassLinesGenerator();
 		CodeClass codeClass = codeClassLinesGenerator.generateCodeClassLine(inputFileNameWithPath);
 		System.out.println(codeClass.getLinesOfCode());
-	}
+	}*/
 	
 	public CodeClass generateCodeClassLine(String inputFileNameWithPath) throws FileNotFoundException, IOException {
 		LOGGER.info("GENERATING FILE");

@@ -17,10 +17,13 @@ Things to say with the completed response:
 ==========================================
 
 	1. Documentation are added for classes and public methods. 
-	2. "Clean Code" standards are followed in the coding:
+	2. "Clean Code" standards are followed in the coding for better readability:
 		a. A method should do what's said in its name, and only that alone.
 		b. Method should not be more than 30 lines long. 
 		c. Class should not be more than 100 lines long.
+		d. Public methods should be at the top, and private at the bottom. 
+		e. All field declarations must be at the top. 
+		f. variable names should be meaningful and consistent throughout method calls and returns.
 		 
 		 
 Final Checks to do:
@@ -33,5 +36,7 @@ Final Checks to do:
 5. Remove unwanted classes. 
 6. Check for Documentation in every class and public methods
 7. Check for DSMTODO
+8. Possibly write your own Exception classes
+
 
 	
